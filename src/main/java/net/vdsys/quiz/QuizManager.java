@@ -1,9 +1,18 @@
 package net.vdsys.quiz;
 
-import java.io.IOException;
+
 import java.io.*;
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Objects;
+import java.util.Scanner;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
+import javax.persistence.Persistence;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaDelete;
 
 public class QuizManager {
 
@@ -17,24 +26,22 @@ public class QuizManager {
     private static String quizName;
     private static Scanner scanner;
 
+  //  private static QuizJPARepository repo;
+    private static EntityManagerFactory entityManagerFactory;
+    private EntityManager entityManager = null;
+
     public static void main(String[] args)  {
 
         initVars() ;
 
         if (validateArgs(args)) {
 
-            QuizRepository repo = new QuizRepository(new File(evaluateDir));
-            try {
-                Quiz q = repo.findQuiz(quizName);
-            } catch (quizFileNotFoundException qnf) {
-                qnf.printStackTrace();
-                System.err.println(qnf.getLocalizedMessage());
-                System.exit(1);
-            } catch (quizIOException ioe) {
-                // ioe.printStackTrace();
-                System.err.println(ioe.getLocalizedMessage());
-                System.exit(1);
-            }
+           // QuizFileRepository repo = new QuizFileRepository(new File(evaluateDir));
+      //      repo = new QuizJPARepository();
+
+         //      Question q = repo.find(Question.class, 1);
+            entityManagerFactory = Persistence.createEntityManagerFactory("db");
+            String parateacaloco = "";
 
 
             try {
@@ -73,10 +80,9 @@ public class QuizManager {
                 e.printStackTrace();
             }
         } else {
-            System.out.println("""
-                    Error en parámetros: para ingreso se espera: Quiz  new [nombre encuensta] [evaluacion/encuesta].
-                                         para evaluar respuestas: Quiz eval [nombre encuensta] [directorio] [archivoslida].
-                                                               o: Quiz eval [nombre encuensta] [directorio] [archivoslida].""");
+            System.out.println("Error en parámetros: para ingreso se espera: Quiz  new [nombre encuensta] [evaluacion/encuesta]."
+                                         +"para evaluar respuestas: Quiz eval [nombre encuensta] [directorio] [archivoslida]."
+                                         +"                      o: Quiz eval [nombre encuensta] [directorio] [archivoslida].");
         }
 
     }

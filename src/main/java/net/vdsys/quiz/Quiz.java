@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class Quiz {
 
-       private String name;
+     private String name;
     private String topic;
     private ArrayList<Question> questions;
     private boolean evaluation;

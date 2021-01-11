@@ -1,25 +1,41 @@
 package net.vdsys.quiz;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
+@Entity
 public class Question {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int questionID;
+
     private String question;
+
+    @Transient
     private ArrayList<Reply> options;
+
+    @Transient
     private ArrayList<Reply> answers;
 
-
+/**
     public Question() {
         this.question = "";
         this.options = new ArrayList<>();
         this.answers = new ArrayList<>();
     }
+**/
 
+    public int getQuestionID() {
+        return questionID;
+    }
+
+    public void setQuestionID(int questionID) {
+        this.questionID = questionID;
+    }
 
     public String getQuestion() {
         return question;
